@@ -1,0 +1,1 @@
+export const USERS_DATA = 'USERS_DATA';

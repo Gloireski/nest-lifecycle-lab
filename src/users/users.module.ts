@@ -24,6 +24,12 @@ const mockUsersService = {
             email: 'user1@test.com',
             password: '$2a$12$hYd.ed33x4jrGR8qDKeIZuFzdl2eztlNJhUYsm4.YYXnyhJhOhcIO', // bcrypt hash
             role: 'user1',
+        },
+        {
+            id: 3,
+            email: 'user2@test.com',
+            password: '$2a$12$hYd.ed33x4jrGR8qDKeIZuFzdl2eztlNJhUYsm4.YYXnyhJhOhcIO', // bcrypt hash
+            role: 'user1',
         }
       ]
     },

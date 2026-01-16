@@ -1,14 +1,16 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { PassportSerializer } from '@nestjs/passport';
 import { UsersService } from 'src/users/users.service';
 import bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
     constructor(
         private usersService: UsersService,
         private jwtService: JwtService,
+        private config: ConfigService
     ) {}
 
     async validateUser(email: string, password: string) {
@@ -22,6 +24,22 @@ export class AuthService {
         return result;
     }
 
+    private async signAccessToken(userId: number, email: string) {
+        return this.jwtService.signAsync(
+            {sub: userId, email },
+            { expiresIn: this.config.getOrThrow<JwtSignOptions['expiresIn']>(
+                            'JWT_EXPIRES_IN')}
+        )
+    }
+
+    private async signRefreshToken(userId: number) {
+        return this.jwtService.signAsync(
+            { sub: userId },
+            { expiresIn: this.config.getOrThrow<JwtSignOptions['expiresIn']>(
+                            'JWT_REFRESH_TOKEN_EXPIRES_IN') },
+        )
+    }
+
     async login(user: any) {
         const payload = {
             sub: user.id,
@@ -30,7 +48,18 @@ export class AuthService {
         }
 
         return {
-            access_token: this.jwtService.sign(payload),
+            // access_token: this.jwtService.sign(payload),
+            access_token: await this.signAccessToken(user.id, user.email),
+            refresh_token: await this.signRefreshToken(user.id),
         };
+    }
+
+    async refresh(token: string) {
+        const payload = await this.jwtService.verifyAsync(token);
+
+        // en prod: vérifier en db que toekn est valide
+        return {
+            accessToken: await this.signAccessToken(payload.sub, payload.email)
+        }
     }
 }

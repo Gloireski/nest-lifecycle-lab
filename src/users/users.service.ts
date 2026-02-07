@@ -8,9 +8,15 @@ export type User = any;
 export class UsersService {
     constructor(
         @Inject(USERS_DATA) private readonly users: any [],
+        @Inject('EXTERNAL_USER_DATA_SERVICE') private readonly externalUserDataService: any
     ) {}
     
     findByEmail(email: string)  {
         return this.users.find(u => u.email == email)
+    }
+
+    async findAll(): Promise<User[]> {
+        const externalUsers = await this.externalUserDataService.fetchUsers();
+        return [externalUsers];
     }
 }

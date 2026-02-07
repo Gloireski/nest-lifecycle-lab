@@ -10,6 +10,7 @@ import { TimingInterceptor } from 'src/common/interceptors/time.interceptor';
 import { JwtAuthGuard } from 'src/common/guards/jwt.guard';
 import { OwnershipGuard } from 'src/common/guards/ownership.guards';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { Public } from 'src/common/decorators/public.decorator';
 // import type { CreatePostDto } from 'src/dto/create-post.dto';
 
 
@@ -22,6 +23,7 @@ export class PostsController {
     //     return this.postsService.findOne(id);
     // }
 
+    @Public()
     @Get()
     findAll(
     @Query('search') search?: string,

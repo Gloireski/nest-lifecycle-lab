@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { USERS_DATA } from './users.constants';
+import { ExternalUserDataService } from 'src/external-services/external-user-data.service';
+import { UsersController } from './users.controller';
 
 const mockUsersService = {
   /* mock implementation
@@ -38,7 +40,12 @@ const mockUsersService = {
     //   useValue: mockUsersService
     // }
     UsersService,
+    {
+      provide: 'EXTERNAL_USER_DATA_SERVICE',
+      useClass: ExternalUserDataService
+    }
   ],
-  exports: [UsersService]
+  exports: [UsersService],
+  controllers: [UsersController]
 })
 export class UsersModule {}

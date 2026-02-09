@@ -17,6 +17,22 @@ export class UsersService {
 
     async findAll(): Promise<User[]> {
         const externalUsers = await this.externalUserDataService.fetchUsers();
-        return [externalUsers];
+        return [...this.users, ...externalUsers];
+    }
+
+    // implement findAll v2 with pagination
+    async findAllV2(page: number = 1, limit: number = 5): Promise<{data: User[], meta: any}> {
+        const externalUsers = await this.externalUserDataService.fetchUsers();
+        const allUsers = [...this.users, ...externalUsers];
+        const startIndex = (page - 1) * limit;
+        const endIndex =  page * limit;
+        return {
+            data: allUsers.slice(startIndex, endIndex),
+            meta: {
+                page,
+                limit,
+                total: allUsers.length
+            }
+        }
     }
 }

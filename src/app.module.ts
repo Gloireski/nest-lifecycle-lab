@@ -11,6 +11,7 @@ import Joi from 'joi';
 import { JwtAuthGuard } from './common/guards/jwt.guard';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { ResponseLoggingInterceptor } from './common/interceptors/response-logging.interceptor';
+import { VersionManagementMiddleware } from './common/middleware/version-management.middleware';
 
 @Module({
   imports: [
@@ -48,7 +49,7 @@ import { ResponseLoggingInterceptor } from './common/interceptors/response-loggi
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware)
-    .forRoutes('*')
+    consumer.apply(LoggerMiddleware).forRoutes('*')
+    // consumer.apply(VersionManagementMiddleware).forRoutes('*')
   }
 }

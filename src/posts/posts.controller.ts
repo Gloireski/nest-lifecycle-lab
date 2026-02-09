@@ -18,10 +18,6 @@ import { Public } from 'src/common/decorators/public.decorator';
 @Controller('posts')
 export class PostsController {
     constructor(private readonly postsService: PostsService) {}
-    // @Get(':id')
-    // async findOne(@Param('id', new ParseIntPipe()) id) {
-    //     return this.postsService.findOne(id);
-    // }
 
     @Public()
     @Get()

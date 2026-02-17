@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { PassportSerializer } from '@nestjs/passport';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 

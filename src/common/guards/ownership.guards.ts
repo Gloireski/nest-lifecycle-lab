@@ -1,5 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { PostsService } from "src/posts/posts.service";
+import { PostsService } from "../../posts/posts.service";
 
 @Injectable()
 export class OwnershipGuard implements CanActivate {

@@ -1,16 +1,16 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Put, Query, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { SimpleValidationPipe, TrimStringPipe, ValidationPipe } from 'src/common/pipes/validation.pipe';
-import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
-import { ZodValidationPipe } from 'src/common/pipes/ZodValidationPipe';
-import { CreatePostDto, CreatePostSchema } from 'src/dto/create-post.dto';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Roles } from 'src/common/decorators/roles.decorator';
-import { TimingInterceptor } from 'src/common/interceptors/time.interceptor';
-import { JwtAuthGuard } from 'src/common/guards/jwt.guard';
-import { OwnershipGuard } from 'src/common/guards/ownership.guards';
-import { CurrentUser } from 'src/common/decorators/current-user.decorator';
-import { Public } from 'src/common/decorators/public.decorator';
+import { SimpleValidationPipe, TrimStringPipe, ValidationPipe } from '../common/pipes/validation.pipe';
+import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
+import { ZodValidationPipe } from '../common/pipes/ZodValidationPipe';
+import { CreatePostDto, CreatePostSchema } from '../dto/create-post.dto';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { TimingInterceptor } from '../common/interceptors/time.interceptor';
+import { JwtAuthGuard } from '../common/guards/jwt.guard';
+import { OwnershipGuard } from '../common/guards/ownership.guards';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { Public } from '../common/decorators/public.decorator';
 // import type { CreatePostDto } from 'src/dto/create-post.dto';
 
 

@@ -1,9 +1,9 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { PostsController } from './posts.controller';
 import { PostsService } from './posts.service';
-import { LoggerMiddleware } from 'src/common/middleware/logger.middleware';
+import { LoggerMiddleware } from '../common/middleware/logger.middleware';
 import { POSTS_DATA } from './posts.constants';
-import { InMemoryPostsRepository } from 'src/repositories/in-memory-posts.repository';
+import { InMemoryPostsRepository } from '../repositories/in-memory-posts.repository';
 
 const mockPostsService = {
   /* mock implementation

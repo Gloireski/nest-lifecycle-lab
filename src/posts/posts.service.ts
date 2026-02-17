@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { use } from 'passport';
-import { CreatePostDto } from 'src/dto/create-post.dto';
-import { Post } from 'src/interfaces/post.interface';
-import type { PostsRepository } from 'src/repositories/posts.repository';
+import { CreatePostDto } from '../dto/create-post.dto';
+import { Post } from '../interfaces/post.interface';
+import type { PostsRepository } from '../repositories/posts.repository';
 
 @Injectable()
 export class PostsService {

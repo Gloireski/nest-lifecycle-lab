@@ -6,6 +6,10 @@ import {
 import request from 'supertest'
 import { App } from 'supertest/types';
 import { AppModule } from './../src/app.module';
+import { UsersController } from 'src/users/users.controller';
+import { UsersService } from 'src/users/users.service';
+import { domainToUnicode } from 'url';
+import { CreateUserDto } from 'src/users/dtos/create-user-dto';
 
 describe('User Management (e2e)', () => {
   let app: INestApplication<App>;
@@ -91,3 +95,6 @@ describe('User Management (e2e)', () => {
     }
   )
 });
+
+
+

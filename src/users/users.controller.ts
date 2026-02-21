@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, Version } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UseInterceptors, Version } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Public } from '../common/decorators/public.decorator';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -12,6 +12,7 @@ export class UsersController {
 
     @Version('1')
     @Public()
+    @UseInterceptors(ClassSerializerInterceptor)
     @Get()
     getAllUsers() {
         return this.usersService.findAll();
@@ -24,16 +25,27 @@ export class UsersController {
     })
     @Version('2')
     @Public()
+    @UseInterceptors(ClassSerializerInterceptor)
     @Get()
     getAllUsersV2(page: number = 1, limit: number = 5) {
         return this.usersService.findAllV2(page, limit);
     }
 
     @Version('1')
-    @Public()
+    // @Public()
     @Post()
     @UseGuards(MockAuthGuard)
     createUser(@Body() CreateUserDto: CreateUserDto) {
         return this.usersService.createUser(CreateUserDto);
+    }
+
+    @Public()
+    @UseGuards(MockAuthGuard)
+    @Patch(':id')
+    updateUser(
+        @Body() updateUserDto: CreateUserDto,
+        @Param('id', ParseIntPipe) id: number
+    ) {
+        return this.usersService.updateUser({...updateUserDto, id});
     }
 }

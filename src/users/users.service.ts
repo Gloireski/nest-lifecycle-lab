@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dtos/update-user-dto';
 import { CreateUserDto } from './dtos/create-user-dto';
 import { plainToInstance } from 'class-transformer';
 import { User } from './entiites/users.entity';
+import { UserResponseDto } from './dtos/user-reponse-dto';
 
 // This should be a real class/interface representing a user entity
 // export type User = any;
@@ -14,6 +15,16 @@ export class UsersService {
         @Inject(USERS_DATA) private readonly users: User[],
         // @Inject('EXTERNAL_USER_DATA_SERVICE') private readonly externalUserDataService: any
     ) {}
+
+    private toUserResponse(user: User): UserResponseDto {
+    return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        address: user.address,
+    };
+    }
 
     createUser(user: CreateUserDto): User {
         const newUser = {
@@ -47,9 +58,10 @@ export class UsersService {
         return this.users.find(u => u.email == email)
     }
 
-    async findAll(): Promise<User[]> {
+    async findAll(): Promise<UserResponseDto[]> {
         // const externalUsers = await this.externalUserDataService.fetchUsers();
-        return plainToInstance(User, this.users);
+        // return plainToInstance(User, this.users);
+        return this.users.map( user => this.toUserResponse(user))
         // return this.users.map(u => {
         //     const { password, ...userWithoutPassword } = u;
         //     return userWithoutPassword;

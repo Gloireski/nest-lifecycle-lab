@@ -8,7 +8,7 @@ export class User {
     email: string;
 
     // V2 fields
-    address: string;
+    address?: string;
     role: string;
     updatedAt?: Date;
 

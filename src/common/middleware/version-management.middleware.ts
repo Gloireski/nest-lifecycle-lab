@@ -1,3 +1,4 @@
+// version-management.middleware.ts
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
@@ -5,23 +6,21 @@ import { NextFunction, Request, Response } from 'express';
 export class VersionManagementMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     // Extract the first segment of the path
-    console.log('URL', req.url);
+
     const firstPathSegment = req.originalUrl
       .split('/')[1]
       ?.toString()
       ?.toLowerCase();
 
     // Check if the first segment is a version
-    if (!firstPathSegment?.startsWith('v')) {
+    if (!firstPathSegment.startsWith('v')) {
       // If not, prepend 'v1' to the path
-      req.url = '/v1' + req.url;
-      console.log('Modified Url', req.url)
+      req.originalUrl = '/v1' + req.originalUrl;
     } else if (!['v1', 'v2'].includes(firstPathSegment)) {
       // If an invalid version is detected, set to latest version ('v2' in this case)
-    //   req.originalUrl = req.originalUrl.replace(firstPathSegment, 'v2');
-    //   console.log('Invalid version detected. Modified url', req.originalUrl)
-     req.url = req.url.replace(firstPathSegment, 'v2');
-     console.log('Invalid version detected. Modified url', req.url)
+      req.originalUrl = req.originalUrl.replace(firstPathSegment, 'v2');
+      // notify the client that the version sent in the request is invalid
+      res.locals.invalidVersion = true;
     }
 
     next();
